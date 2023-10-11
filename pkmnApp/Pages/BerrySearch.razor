@@ -24,7 +24,14 @@
 {
     <h3>@pkmn.Name - #@pkmn.Order</h3>
     List<PokemonType> typeList = pkmn.Types;
-    
+    List<PokemonStat> statList = pkmn.Stats;
+
+    foreach (PokemonStat stat in statList)
+    {
+        <p>@stat</p>
+    }
+    <p>Its stats are @statList</p>
+
     foreach (PokemonType type in typeList)
     {
         <p>@type</p>
