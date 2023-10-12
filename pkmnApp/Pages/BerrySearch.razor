@@ -2,20 +2,21 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using PokeApiNet;
+@*@using pkmnApp.Services*@
 @inject IHttpClientFactory ClientFactory
 
 <h1>Berry Search</h1>
 
 
-<button class="btn btn-primary">Search</button>
+@*<button class="btn btn-primary">Search</button>*@
 
-<button @onclick="FetchData" class="btn btn-primary">Get Data</button>
+@*<button @onclick="FetchData" class="btn btn-primary">Get Data</button>*@
 
-@if (todo != null)
+@*@if (todo != null)
 {
     <h3>Title: @todo.title</h3>
     <p>Completed: @todo.completed</p>
-}
+}*@
 
 <p>This component demonstrates fetching data from a service.</p>
 <button @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
@@ -31,12 +32,16 @@
         <p>@stat</p>
     }
     <p>Its stats are @statList</p>
-
+    String[] test = new string[0];
+    String[] testType = new string[2];
     foreach (PokemonType type in typeList)
     {
-        <p>@type</p>
-    }
-    <p>Its types are @typeList</p>
+        String typeStr = type.Type.Name.Trim();
+        testType.Append(typeStr);
+        @*<button class="btn btn-xs" value=@typeStr>@typeStr</button>*@
+        @*<input type=@typeStr class="btn btn-xs" value=@typeStr.ToUpper()>*@
+        <p type=@typeStr class="type btn btn-xs">@typeStr.ToUpper()</p>
+    } 
 }
 
 @*@if (pokeClient != null)
@@ -45,15 +50,21 @@
 }*@
 
 @code {
-    PokeApiClient pokeClient = new PokeApiClient();
+    //PokeApiClient pokeClient = new PokeApiClient();
     public Pokemon pkmn;
+    PokeApiClient pokeClient = new PokeApiClient();
 
     public async void accessInfo ()
     {
         pkmn = await pokeClient.GetResourceAsync<Pokemon>("bulbasaur");
 
     }
-    public Todo todo;
+
+    public async void accessInfo (String poke)
+    {
+        pkmn = await pokeClient.GetResourceAsync<Pokemon>(poke);
+    }
+    /*public Todo todo;
 
     public HttpClient httpClient = new HttpClient();
 
@@ -68,7 +79,7 @@
         public int id { get; set; }
         public string title { get; set; }
         public bool completed { get; set; } 
-    }
+    }*/
 }
 
 

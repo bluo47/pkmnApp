@@ -18,6 +18,20 @@ a, .btn-link {
     border-color: #1861ac;
 }
 
+.btn-xs {
+    font-family: 'Agency FB';
+    box-shadow: none;
+    color: white;
+    padding: 1px 8px 1px 8px;
+}
+
+p.type.btn-xs:hover {
+    font-family: 'Agency FB';
+    cursor: default;
+    color: white;
+    background-position: 0px;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -66,3 +80,29 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+p[type="normal"] { background-color: #a8a77a; color: white; }
+p[type="fire"] { background-color: #ee8130; color: white; }
+p[type="water"] { background-color: #6390f0; color: white; }
+p[type="electric"] { background-color: #f7d02c; color: white; }
+p[type="grass"] { background-color: #7ac74c; }
+p[type="ice"] { background-color: #96d9d6; color: white; }
+p[type="fighting"] { background-color: #c22e28; color: white; }
+p[type="poison"] { background-color: #a33ea1; color: white; }
+p[type="ground"] { background-color: #e2bf65; color: white; }
+p[type="flying"] { background-color: #a98ff3; color: white; }
+p[type="psychic"] { background-color: #f95587; color: white; }
+p[type="bug"] { background-color: #a6b91a; color: white; }
+p[type="rock"] { background-color: #b6a136; color: white; }
+p[type="ghost"] { background-color: #735797; color: white; }
+p[type="dragon"] { background-color: #6f35fc; color: white; }
+p[type="dark"] { background-color: #705746; color: white; }
+p[type="steel"] { background-color: #b7b7ce; color: white; }
+p[type="fairy"] { background-color: #d685ad; color: white; }
+
+.search {
+    border: 1px solid;
+    margin: 2px 4px 2px 4px;
+    line-height: 2;
+}
+

@@ -1,0 +1,51 @@
+﻿@page "/pokemon-lookup"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using PokeApiNet;
+@*@using pkmnApp.Services*@
+@inject IHttpClientFactory ClientFactory
+
+<h1>Pokemon Lookup</h1>
+
+<input type="text" class="search" placeholder="Type in a Pokemon name..">
+@try
+{
+    <button @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
+
+    <h3><img src=@pkmn.Sprites.FrontDefault> @pkmn.Name - #@pkmn.Order</h3>
+
+    List<PokemonType> typeList = pkmn.Types;
+    foreach (PokemonType type in typeList)
+    {
+        String typeStr = type.Type.Name.Trim();
+        <p type=@typeStr class="type btn btn-xs">@typeStr.ToUpper()</p>
+    }
+    PokemonSprites sprites = @pkmn.Sprites;
+    <p>@sprites.BackDefault - <img src=@sprites.BackDefault></p>
+    <p>@pkmn.Sprites.FrontDefault</p>
+
+}
+catch (Exception e)
+{
+    <p class="error">The name or ID that you typed in is not valid. Try again.</p>
+}
+@*@if (pkmn != null)
+{
+    
+}*@
+
+@code {
+    public Pokemon pkmn;
+    PokeApiClient pokeClient = new PokeApiClient();
+
+    public async void accessInfo()
+    {
+        Random rand = new Random();
+        pkmn = await pokeClient.GetResourceAsync<Pokemon>(rand.Next(1,1018));
+    }
+
+    public async void accessInfo(String poke)
+    {
+        pkmn = await pokeClient.GetResourceAsync<Pokemon>(poke);
+    }
+}
