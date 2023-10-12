@@ -2,41 +2,65 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using PokeApiNet;
+@using System.Windows.Input;
+@using System.ComponentModel.DataAnnotations;
 @*@using pkmnApp.Services*@
 @inject IHttpClientFactory ClientFactory
+@inject ILogger<Pokemon> Logger
 
 <h1>Pokemon Lookup</h1>
 
-<input type="text" class="search" placeholder="Type in a Pokemon name..">
+<input type="text" class="search" placeholder="Type in a Pokemon name or ID..">
+
+<EditForm Model="@Model" OnSubmit="@Submit">
+    <InputText @bind-Value="Model!.Id" />
+    <button type="submit">Submit</button>
+</EditForm>
+
 @try
 {
-    <button @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
+    
+    <button id="pokemonSearch" @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
+    
+    
 
-    <h3><img src=@pkmn.Sprites.FrontDefault> @pkmn.Name - #@pkmn.Order</h3>
+    if (pkmn != null)
+    {   
+        
+        // figure out the dash naming conventions; e.g. Meowstic-male (811), Gourgeist-average, etc.
+        // iron-bundle <-
+        String name = @capFirstLetter(pkmn.Name);
+        <h3><img src=@pkmn.Sprites.FrontDefault> @name - #@pkmn.Order</h3>
 
-    List<PokemonType> typeList = pkmn.Types;
-    foreach (PokemonType type in typeList)
-    {
-        String typeStr = type.Type.Name.Trim();
-        <p type=@typeStr class="type btn btn-xs">@typeStr.ToUpper()</p>
-    }
-    PokemonSprites sprites = @pkmn.Sprites;
-    <p>@sprites.BackDefault - <img src=@sprites.BackDefault></p>
-    <p>@pkmn.Sprites.FrontDefault</p>
-
+        List<PokemonType> typeList = pkmn.Types;
+        foreach (PokemonType type in typeList)
+        {
+            String typeStr = type.Type.Name.Trim();
+            <p type=@typeStr class="type btn btn-xs">@typeStr.ToUpper()</p>
+        }
+        PokemonSprites sprites = @pkmn.Sprites;
+        <p>@sprites.BackDefault - <img src=@sprites.BackDefault></p>
+        <p>@pkmn.Sprites.FrontDefault</p>
+    } 
 }
 catch (Exception e)
 {
     <p class="error">The name or ID that you typed in is not valid. Try again.</p>
 }
-@*@if (pkmn != null)
-{
-    
-}*@
+@**@
 
 @code {
     public Pokemon pkmn;
     PokeApiClient pokeClient = new PokeApiClient();
+
+    public Pokemon Model { get; set; }
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit()
+    {
+        Logger.LogInformation("Model.Id = {Id}", Model?.Id);
+    }
 
     public async void accessInfo()
     {
@@ -48,4 +72,20 @@ catch (Exception e)
     {
         pkmn = await pokeClient.GetResourceAsync<Pokemon>(poke);
     }
+
+    public string capFirstLetter(string str)
+    {
+        String[] words = str.Split(new char[] {' ', '-'});
+        String capped = "";
+        for (int i = 0; i < words.Length; i++)
+        {
+            string firstLetter = words[i].Substring(i, 1).ToUpper();
+            if (i == 0)
+                capped += firstLetter + words[i].Substring(1);
+            else
+                capped += " " + firstLetter + words[i].Substring(1);
+        }
+        return capped;
+    }
+
 }

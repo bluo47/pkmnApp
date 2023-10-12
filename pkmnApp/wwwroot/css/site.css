@@ -104,5 +104,6 @@ p[type="fairy"] { background-color: #d685ad; color: white; }
     border: 1px solid;
     margin: 2px 4px 2px 4px;
     line-height: 2;
+    width: 20%;
 }
 
