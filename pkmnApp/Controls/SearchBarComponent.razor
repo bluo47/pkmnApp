@@ -1,0 +1,16 @@
+﻿<div>
+    <input bind-value="filter" type="text" name="search" placeholder="Type in a Pokemon name or ID.." class="search" />
+    <button onclick="HandleSearch" >Search</button>
+    
+    <small>Type in a Pokemon name or ID..</small>
+</div>
+
+@code {
+    private string filter;
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+    private void HandleSearch()
+    {
+        OnSearch.InvokeAsync(filter);
+    }
+}

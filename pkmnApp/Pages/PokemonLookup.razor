@@ -12,10 +12,13 @@
 
 <input type="text" class="search" placeholder="Type in a Pokemon name or ID..">
 
-<EditForm Model="@Model" OnSubmit="@Submit">
-    <InputText @bind-Value="Model!.Id" />
-    <button type="submit">Submit</button>
-</EditForm>
+@*<EditForm Model="@Model" OnSubmit="@Submit">*@
+    @*<InputText @bind-Value="Model!.Id" />*@
+    @*<InputText @bind-Value="(string)Model!.Id" />*@
+   @* <button type="submit">Submit</button>*@
+@*</EditForm>*@
+
+<SearchBarComponent />
 
 @try
 {
