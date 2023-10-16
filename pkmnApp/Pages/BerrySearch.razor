@@ -1,103 +1,23 @@
 ﻿@page "/berrySearch"
 @using System.Text.Json
 @using System.Text.Json.Serialization
-@using PokeApiNet;
-@*@using pkmnApp.Services*@
-@inject IHttpClientFactory ClientFactory
+@using PokeApiNet
+@using pkmnApp.Data
+@inject PokeClient PokeService
 
-<h1>Berry Search</h1>
+<Search searchValue="@this.searchValue" />
 
-
-@*<button class="btn btn-primary">Search</button>*@
-
-@*<button @onclick="FetchData" class="btn btn-primary">Get Data</button>*@
-
-@*@if (todo != null)
-{
-    <h3>Title: @todo.title</h3>
-    <p>Completed: @todo.completed</p>
-}*@
-
-<p>This component demonstrates fetching data from a service.</p>
-<button @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
-
-@if (pkmn != null)
-{
-    <h3>@pkmn.Name - #@pkmn.Order</h3>
-    List<PokemonType> typeList = pkmn.Types;
-    List<PokemonStat> statList = pkmn.Stats;
-
-    foreach (PokemonStat stat in statList)
-    {
-        <p>@stat</p>
-    }
-    <p>Its stats are @statList</p>
-    String[] test = new string[0];
-    String[] testType = new string[2];
-    foreach (PokemonType type in typeList)
-    {
-        String typeStr = type.Type.Name.Trim();
-        testType.Append(typeStr);
-        @*<button class="btn btn-xs" value=@typeStr>@typeStr</button>*@
-        @*<input type=@typeStr class="btn btn-xs" value=@typeStr.ToUpper()>*@
-        <p type=@typeStr class="type btn btn-xs">@typeStr.ToUpper()</p>
-    } 
-}
-
-@*@if (pokeClient != null)
-{
-    accessInfo();
-}*@
+<MudContainer>
+    <MudText>@berry.Name</MudText>
+</MudContainer>
 
 @code {
-    //PokeApiClient pokeClient = new PokeApiClient();
-    public Pokemon pkmn;
-    PokeApiClient pokeClient = new PokeApiClient();
+    string? searchValue;
+    string title = "Berry Search";
+    Berry berry;
 
-    public async void accessInfo ()
+    protected override async Task OnInitializedAsync()
     {
-        pkmn = await pokeClient.GetResourceAsync<Pokemon>("bulbasaur");
-
-    }
-
-    public async void accessInfo (String poke)
-    {
-        pkmn = await pokeClient.GetResourceAsync<Pokemon>(poke);
-    }
-    /*public Todo todo;
-
-    public HttpClient httpClient = new HttpClient();
-
-    public async Task FetchData()
-    {
-        todo = await httpClient.GetFromJsonAsync<Todo>("https://jsonplaceholder.typicode.com/todos/1");
-    }
-
-    public class Todo
-    {
-        public int userId { get; set; }
-        public int id { get; set; }
-        public string title { get; set; }
-        public bool completed { get; set; } 
-    }*/
-}
-
-
-
-@*<PageTitle>Counter</PageTitle>
-
-<h1>Counter</h1>
-
-<p role="status">Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
+        berry = await PokeService.GetBerryAsync(searchValue);
     }
 }
-*@

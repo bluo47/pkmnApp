@@ -1,0 +1,73 @@
+﻿@using System.Net.Http.Json
+@using System.Collections.Generic
+@using PokeApiNet;
+@using pkmnApp.Data
+@inject HttpClient httpClient
+@inject PokeClient pokeApi
+  
+<PageTitle>PKMN APP - Berry Lookup</PageTitle>
+
+<MudContainer Class="Mt-16">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">@title</MudText>
+    <MudText Align="Align.Center">Some placeholder description text.</MudText>
+
+    @*<MudSelect T="string" Label="Name" @bind-value="@searchValue" AnchorOrigin="Origin.BottomCenter"/>*@
+    <MudTextField Immediate="true" TextChanged="buttonStatus" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." Label="" 
+    ValueChanged="" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"/>
+    <MudButton Variant="@variantValue" Color="Color.Primary" Disabled="@_disabled" OnClick="searchApi">
+        Generate
+    </MudButton>
+
+    @*<MudAutocomplete T="string" />*@
+</MudContainer>
+
+@code {
+    [Parameter] public string? searchValue { get; set; }
+    [Parameter] public EventCallback<string> bSearch { get; set; }
+
+    string title = "Berry Lookup";
+
+    private bool _searchEmpty = true;
+    private bool _disabled = true;
+
+    Variant variantValue = Variant.Outlined;
+    Pokemon pkmn;
+    Berry berry = new Berry();
+    PokeApiClient pokeC = new PokeApiClient();
+
+    private async void SearchApi(string value)
+    {
+        berry = await pokeApi.GetBerryAsync(value);
+    }
+
+    private async void SearchRandomApi(string value)
+    {
+        Random rand = new Random();
+        pkmn = await pokeC.GetResourceAsync<Pokemon>(rand.Next(1, 1018));
+    }
+
+    async Task buttonStatus()
+    {
+        _searchEmpty = false;
+        variantValue = Variant.Filled;
+        _disabled = false;
+    }
+
+    async Task searchApi()
+    {
+            berry = await pokeApi.GetBerryAsync(searchValue);
+    }
+
+    @*async Task searchApi()
+    {
+        if (searchValue == "" || searchValue == null)
+        {
+            Random rand = new Random();
+            pkmn = await pokeApi.GetBerryAsync(rand.Next(1, 1018));
+        }
+        else
+        {
+            berry = await pokeApi.GetBerryAsync(searchValue);
+        }
+    }*@
+}
