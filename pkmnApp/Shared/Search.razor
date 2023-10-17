@@ -5,7 +5,7 @@
 @inject HttpClient httpClient
 @inject PokeClient pokeApi
   
-<PageTitle>PKMN APP - Berry Lookup</PageTitle>
+@* Search component *@
 
 <MudContainer Class="Mt-16">
     <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">@title</MudText>
@@ -13,7 +13,7 @@
 
     @*<MudSelect T="string" Label="Name" @bind-value="@searchValue" AnchorOrigin="Origin.BottomCenter"/>*@
     <MudTextField Immediate="true" TextChanged="buttonStatus" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." Label="" 
-    ValueChanged="" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"/>
+    Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"/>
     <MudButton Variant="@variantValue" Color="Color.Primary" Disabled="@_disabled" OnClick="searchApi">
         Generate
     </MudButton>

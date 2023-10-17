@@ -1,0 +1,17 @@
+﻿@page "/test"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using PokeApiNet
+@using pkmnApp.Data
+@inject PokeClient PokeService
+
+<PageTitle>PKMN APP - Berry Lookup</PageTitle>
+
+<MudContainer>
+    <MudTextField Immediate="true" TextChanged="buttonStatus" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." Label=""
+                  Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+</MudContainer>
+
+@code {
+    
+}

@@ -1,9 +1,10 @@
 ﻿@namespace pkmnApp
 @using PokeApiNet
 
+@* Autocomplete MudBlazor element *@
 
-<MudAutocomplete T="Pokemon" Label="User Name" ValueChanged="OnCboUserChange" Value="@Value"
-                 SearchFunc="@SearchCboUsers"
+<MudAutocomplete T="Pokemon" Label="User Name" ValueChanged="OnMonChange" Value="@Mon"
+                 SearchFunc="@SearchMons"
                  Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined"
                  MaxItems="null"
                  ToStringFunc="@(r=> r==null ? null : r.Name)"

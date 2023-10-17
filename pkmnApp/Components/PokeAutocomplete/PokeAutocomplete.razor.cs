@@ -4,7 +4,7 @@ using MudBlazor.Extensions;
 using pkmnApp.Data;
 using PokeApiNet;
 
-namespace pkmnApp.Components.PokeAutocomplete
+namespace pkmnApp
 
 {
     public partial class PokeAutocomplete : ComponentBase
@@ -27,7 +27,7 @@ namespace pkmnApp.Components.PokeAutocomplete
                 await MonChanged.InvokeAsync(Mon);
             }
         }
-
+        // TODO: figure out the callback and search autocomplete mechanism
         private async Task<IEnumerable<Pokemon>> SearchMons(string search)
         {
             if (string.IsNullOrEmpty(search))
@@ -39,15 +39,5 @@ namespace pkmnApp.Components.PokeAutocomplete
             });
             return result;
         }
-
-        /*private async Pokemon SearchMon(string search)
-        {
-            if (string.IsNullOrEmpty(search))
-                return null;
-            var result = await Task.Run<IEnumerable<Pokemon>>(() =>
-            {
-
-            })
-        }*/
     }
 }

@@ -5,19 +5,25 @@
 @using pkmnApp.Data
 @inject PokeClient PokeService
 
+<PageTitle>PKMN APP - Berry Lookup</PageTitle>
+
+@* TODO: add Search and Autocomplete to Berry Search *@
 <Search searchValue="@this.searchValue" />
 
 <MudContainer>
-    <MudText>@berry.Name</MudText>
+    <MudText>Hello</MudText>
 </MudContainer>
 
+<MudContainer>
+    <PokeAutocomplete />
+</MudContainer>
 @code {
     string? searchValue;
     string title = "Berry Search";
     Berry berry;
 
-    protected override async Task OnInitializedAsync()
+    @* protected override async Task OnInitializedAsync()
     {
         berry = await PokeService.GetBerryAsync(searchValue);
-    }
+    } *@
 }
