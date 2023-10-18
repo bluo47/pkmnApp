@@ -1,0 +1,22 @@
+﻿@namespace pkmnApp
+@using PokeApiNet
+
+@* Pokemon Entry card to render when generate entry is clicked *@
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudAvatar class="pkmnType-fire">@pkmn.Name.Substring(0,1).ToUpper()</MudAvatar>
+        </CardHeaderAvatar>
+    </MudCardHeader>
+</MudCard>
+
+@code {
+    [Parameter]
+    public RenderFragment? cardContent { get; set; }
+
+    [Parameter]
+    public Pokemon? pkmn { get; set; }
+
+
+}

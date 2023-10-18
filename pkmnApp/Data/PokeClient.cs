@@ -1,4 +1,5 @@
-﻿using PokeApiNet;
+﻿using Microsoft.AspNetCore.Components;
+using PokeApiNet;
 
 namespace pkmnApp.Data
 {
@@ -7,12 +8,15 @@ namespace pkmnApp.Data
         public static PokeApiClient pokeApi = new PokeApiClient();
 
         Random rand = new Random();
-        Pokemon Mon { get; set; } = new Pokemon();
+
+        [Parameter]
+        public Pokemon Mon { get; set; } = new Pokemon();
 
         public async Task<Pokemon> GetPokemonAsync(string value)
         {
             return await pokeApi.GetResourceAsync<Pokemon>(value);
         }
+
 
         public async Task<Berry> GetBerryAsync(string value)
         {

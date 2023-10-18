@@ -100,6 +100,25 @@ p[type="dark"] { background-color: #705746; color: white; }
 p[type="steel"] { background-color: #b7b7ce; color: white; }
 p[type="fairy"] { background-color: #d685ad; color: white; }
 
+.pkmnType-normal { background-color: #a8a77a !important; color: white !important; }
+.pkmnType-fire { background-color: #ee8130 !important; color: white !important }
+.pkmnType-water { background-color: #6390f0!important; color: white !important }
+.pkmnType-electric { background-color: #f7d02c!important; color: white !important }
+.pkmnType-grass { background-color: #7ac74c !important; color: white !important }
+.pkmnType-ice { background-color: #96d9d6 !important; color: white !important }
+.pkmnType-fighting { background-color: #c22e28 !important; color: white !important }
+.pkmnType-poison { background-color: #a33ea1 !important; color: white !important }
+.pkmnType-ground { background-color: #e2bf65 !important; color: white !important }
+.pkmnType-flying { background-color: #a98ff3 !important; color: white !important }
+.pkmntype-psychic { background-color: #f95587 !important; color: white !important }
+.pkmnType-bug { background-color: #a6b91a !important; color: white !important }
+.pkmnType-rock { background-color: #b6a136 !important; color: white !important }
+.pkmnType-ghost { background-color: #735797 !important; color: white !important }
+.pkmnType-dragon { background-color: #6f35fc !important; color: white !important }
+.pkmnType-dark { background-color: #705746 !important; color: white !important }
+.pkmnType-steel { background-color: #b7b7ce !important; color: white !important }
+.pkmnType-fairy { background-color: #d685ad !important; color: white !important }
+
 .search {
     border: 1px solid;
     margin: 2px 4px 2px 4px;

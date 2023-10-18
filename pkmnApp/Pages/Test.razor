@@ -1,18 +1,157 @@
-﻿@* @page "/test"
+﻿@page "/test"
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using PokeApiNet
 @using pkmnApp.Data
 @inject PokeClient PokeService
 
-<PageTitle>PKMN APP - Berry Lookup</PageTitle>
+<PageTitle>PKMN APP - Pokemon Lookup</PageTitle>
 
-<MudContainer>
-    <MudTextField Immediate="true" TextChanged="buttonStatus" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." Label=""
-                  Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+<MudContainer Fixed="true">
+    <MudStack Row="true" Justify="Justify.FlexEnd">
+        <MudTextField Immediate="true" TextChanged="checkEntry" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." HelperTextOnFocus="false" Label="API Lookup"
+                      Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+        <MudButton 
+            OnClick="DoSearchAsync" Color="Color.Primary" Disabled="_disabled" Variant="variantValue" Size="Size.Small">Generate Description</MudButton>
+    </MudStack>
+    <MudDivider />
 </MudContainer>
 
-@code {
-    
+@if (pkmn == null || listTypesPT == null)
+{
+    <MudContainer>
+        <MudText>Loading...</MudText>
+        <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+    </MudContainer>
+} else
+{
+    <MudContainer>
+        <MudCard>
+            <MudCardHeader>
+                @*<CardHeaderAvatar>
+                    <MudAvatar Class="@getTypeColor(listTypesPT[0])">@pkmn.Name.Substring(0,1).ToUpper()</MudAvatar>
+                    <MudAvatar>
+                        <MudImage Src="@pkmn.Sprites.FrontDefault"/>
+                    </MudAvatar>
+                </CardHeaderAvatar>*@
+                <CardHeaderContent>
+                    <MudStack Row="true">
+                        <MudImage Src="@pkmn.Sprites.FrontDefault" />
+                        <MudText Class="d-flex align-center" Typo="Typo.h4">@capFirstLetter(pkmn.Name) - #@pkmn.Order</MudText>
+                        <MudButtonGroup VerticalAlign Size="Size.Large" Variant="Variant.Outlined">
+                             @foreach (PokemonType type in listTypesPT)
+                            {
+                                <MudButton Class="@getTypeColor(type)" DisableRipple>@type.Type.Name</MudButton>
+                            }
+                        </MudButtonGroup>
+                    </MudStack>
+                </CardHeaderContent>
+            </MudCardHeader>
+        </MudCard>
+    </MudContainer>
 }
- *@
+
+
+
+@code {
+
+    [Parameter] public string? searchValue { get; set; }
+    [Parameter] public EventCallback<string> mon { get; set; }
+    private bool _searchEmpty = true;
+    private bool _disabled = true;
+    Pokemon pkmn;
+    private List<string> listTypes;
+    private List<PokemonType> listTypesPT;
+    Variant variantValue = Variant.Outlined;
+
+    @* ------------------------------------- *@
+    @* DATA RETRIEVAL/MODIFICATION FUNCTIONS *@
+    @* ------------------------------------- *@
+
+    @* load up the initial pokemon entry *@
+    protected override async Task OnInitializedAsync()
+    {
+        await DoSearchAsync();
+        pkmnGetTypeList();
+    }
+
+    @* Runs when the button is clicked; searches the API for a matching name *@
+    protected async Task DoSearchAsync()
+    {
+        if (searchValue != null)
+        {
+            pkmn = await PokeService.GetPokemonAsync(searchValue);
+            pkmnGetTypeList();
+        }
+        else
+        {
+            pkmn = await PokeService.GetPokemonAsync("bulbasaur");
+            pkmnGetTypeList();
+        }
+        StateHasChanged();
+    }
+
+        @* check to disable/enable the "generate description" button next to the search bar *@
+    private void checkEntry()
+    {
+        if (searchValue == null || searchValue == "")
+        {
+            _searchEmpty = true;
+            variantValue = Variant.Outlined;
+            _disabled = true;
+        }
+        else
+        {
+            _searchEmpty = false;
+            variantValue = Variant.Filled;
+            _disabled = false;
+        }
+    }
+
+    @* ------------------------------------- *@
+    @* DATA RETRIEVAL/MODIFICATION FUNCTIONS *@
+    @* ------------------------------------- *@
+
+    @* capitalize the first letter of each word in a Pokemon name *@
+    public string capFirstLetter(string str)
+    {
+        String[] words = str.Split(new char[] { ' ', '-' });
+        String capped = "";
+        for (int i = 0; i < words.Length; i++)
+        {
+            string firstLetter = words[i].Substring(0, 1).ToUpper();
+            if (i == 0)
+                capped += firstLetter + words[i].Substring(1);
+            else
+                capped += " " + firstLetter + words[i].Substring(1);
+        }
+        return capped;
+    }
+
+    @* Retrieves the list of types in both string and PT form *@
+    private void pkmnGetTypeList()
+    {
+        List<string> temp = new List<string>();
+        List<PokemonType> temp2 = new List<PokemonType>();
+        foreach (PokemonType type in pkmn.Types)
+        {
+            temp.Add(type.Type.Name);
+            temp2.Add(type);
+        }
+
+        listTypes = temp;
+        listTypesPT = temp2;
+    }
+
+    @* returns the CSS class color descriptor given the type *@
+    private string getTypeColor(PokemonType type)
+    {
+        if (type != null)
+            return "pkmnType-" + type.Type.Name;
+        else
+            return "pkmnType-normal";
+    }
+
+
+}
+ 
