@@ -1,0 +1,52 @@
+﻿@page "/Child"
+<div class="border border-primary">
+@* 	<h3>Child</h3> *@
+	<h2>@ChildContent</h2>
+	<p>Title: @title</p>
+	<p>Price: @price</p>
+
+	<button class="btn btn-success" @onclick="btnClicked">Add to cart</button>
+
+	<p>@msg</p>
+</div>
+
+@code {
+	[Parameter]
+	public EventCallback<int> PassPrice { get; set; }
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter]
+	public int BookId { get; set; }
+
+	string? title;
+	int price;
+	string msg = string.Empty;
+
+	protected override void OnInitialized()
+	{
+		// simulate getting book info from a database
+		switch(BookId)
+		{
+			case 1:
+				title = "Blazor for Beginners";
+				price = 25;
+				break;
+			case 2:
+				title = "Pokemon Challenge";
+				price = 15;
+				break;
+			default:
+				title = "Wizard of Oz";
+				price = 10;
+				break;
+		}
+	}
+
+	async Task btnClicked()
+	{
+		msg = title + " costs " + price;
+		await PassPrice.InvokeAsync(price);  // parent's method is called, passing parameter that caused by child's action.
+	}
+}

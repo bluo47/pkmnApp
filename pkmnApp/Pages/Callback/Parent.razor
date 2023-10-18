@@ -1,0 +1,19 @@
+﻿@page "/Parent"
+<div>
+	<h3>Parent</h3>
+	<Child PassPrice="@CalculateTotal" BookId="1">
+		Book 1
+	</Child>
+	<Child PassPrice="@CalculateTotal" BookId="2">
+		Book 2
+	</Child>
+	<h3>Total cost of books: @totalAmt</h3>
+</div>
+@code {
+	private int totalAmt;
+
+	void CalculateTotal(int price)
+	{
+		totalAmt += price;
+	}
+}

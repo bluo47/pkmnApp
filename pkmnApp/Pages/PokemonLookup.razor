@@ -10,7 +10,8 @@
 
 <h1>Pokemon Lookup</h1>
 
-<input type="text" class="search" placeholder="Type in a Pokemon name or ID..">
+<input type="text" class="search" placeholder="Type in a Pokemon name or ID.." @bind-value="@pokeId">
+<p>@pokeId</p>
 
 @*<EditForm Model="@Model" OnSubmit="@Submit">*@
     @*<InputText @bind-Value="Model!.Id" />*@
@@ -24,10 +25,10 @@
 {
     
     <button id="pokemonSearch" @onclick="accessInfo" class="btn btn-primary">Generate Pokemon Info</button>
-    
-    
 
-    if (pkmn != null)
+    <button class="btn btn-success" @onclick="()=>accessInfo(pokeId)">Search by Id</button>
+
+    @if (pkmn != null)
     {   
         
         // figure out the dash naming conventions; e.g. Meowstic-male (811), Gourgeist-average, etc.
@@ -44,6 +45,7 @@
         PokemonSprites sprites = @pkmn.Sprites;
         <p>@sprites.BackDefault - <img src=@sprites.BackDefault></p>
         <p>@pkmn.Sprites.FrontDefault</p>
+
     } 
 }
 catch (Exception e)
@@ -60,20 +62,29 @@ catch (Exception e)
 
     protected override void OnInitialized() => Model ??= new();
 
+    string pokeId;
+
     private void Submit()
     {
         Logger.LogInformation("Model.Id = {Id}", Model?.Id);
+    }
+
+    void divide(int x)
+    {
+        var y = 1 / x;
     }
 
     public async void accessInfo()
     {
         Random rand = new Random();
         pkmn = await pokeClient.GetResourceAsync<Pokemon>(rand.Next(1,1018));
+        StateHasChanged();
     }
 
-    public async void accessInfo(String poke)
+    public async void accessInfo(string poke)
     {
         pkmn = await pokeClient.GetResourceAsync<Pokemon>(poke);
+        StateHasChanged();
     }
 
     public string capFirstLetter(string str)
