@@ -11,8 +11,11 @@
     <MudStack Row="true" Justify="Justify.FlexEnd">
         <MudTextField Immediate="true" TextChanged="checkEntry" @bind-Value="@searchValue" HelperText="Enter a Pokemon name or ID..." HelperTextOnFocus="false" Label="API Lookup"
                       Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
-        <MudButton 
-            OnClick="DoSearchAsync" Color="Color.Primary" Disabled="_disabled" Variant="variantValue" Size="Size.Small">Generate Description</MudButton>
+        <MudButtonGroup VerticalAlign OverrideStyles="false">
+            <MudButton OnClick="DoSearchAsync" Color="Color.Primary" Disabled="_disabled" Variant="variantValue" Size="Size.Small">Generate Description</MudButton>
+            <MudButton OnClick="DoSearchAsync" Color="Color.Secondary">Feeling Lucky?</MudButton>
+        </MudButtonGroup>
+                      
     </MudStack>
     <MudDivider />
 </MudContainer>
@@ -63,6 +66,7 @@
     private List<string> listTypes;
     private List<PokemonType> listTypesPT;
     Variant variantValue = Variant.Outlined;
+    private string errorMessage;
 
     @* ------------------------------------- *@
     @* DATA RETRIEVAL/MODIFICATION FUNCTIONS *@
@@ -78,15 +82,23 @@
     @* Runs when the button is clicked; searches the API for a matching name *@
     protected async Task DoSearchAsync()
     {
-        if (searchValue != null)
+        if (searchValue == "" || searchValue == null)
         {
-            pkmn = await PokeService.GetPokemonAsync(searchValue);
+            Random rand = new Random();
+            pkmn = await PokeService.GetPokemonAsync(rand.Next(1,1018).ToString());
             pkmnGetTypeList();
-        }
-        else
+        } else
         {
-            pkmn = await PokeService.GetPokemonAsync("bulbasaur");
-            pkmnGetTypeList();
+            try
+            {
+                pkmn = await PokeService.GetPokemonAsync(searchValue);
+                pkmnGetTypeList();
+            }
+            catch (Exception e)
+            {
+                errorMessage = "There were no Pokemon associated with the name or ID that you entered. Check if there are any spelling mistakes.";
+
+            }
         }
         StateHasChanged();
     }
