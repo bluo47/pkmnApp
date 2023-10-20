@@ -1,3 +1,6 @@
+### 10/20/23 (Fri)
+- [CRUD Operations with Blazor](https://www.c-sharpcorner.com/article/crud-operations-using-blazor-net-6-0-entity-framework-core/)
+
 ### 10/18/23 (Wed)
 - Worked on the communication between API and Blazor, and finding way to put that into UI design from MudBlazor
 - work on PokeCard? figure if there's a way to use the pkmn variable in  a separate component
