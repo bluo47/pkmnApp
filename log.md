@@ -5,7 +5,10 @@
 Blazor workshop notes:   
 **Todo app**    
 TodoItem creates as a C# class, with two variables represnting the title of the todo item as well as the status of the todo item.    
-To bind the TodoItems to HTML in Blazor, we enter our Razor page, Todo.razor and create a c# function in the @code block to update our list of todoitems. To add this, we track the input value using the @bind attribute to a private variable in our code block (newTodo), and we update the application by binding our add function to the button @onclick event, which will run the function when the button is clicked.
+To bind the TodoItems to HTML in Blazor, we enter our Razor page, Todo.razor and create a c# function in the @code block to update our list of todoitems. To add this, we track the input value using the @bind attribute to a private variable in our code block (newTodo), and we update the application by binding our add function to the button @onclick event, which will run the function when the button is clicked.   
+> The **Document Object Model** (DOM) is the data representation of the objects that comprise the structure and content of a document on the web. [Mozilla article on DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)   
+
+f
 
 ### 10/18/23 (Wed)
 - Worked on the communication between API and Blazor, and finding way to put that into UI design from MudBlazor
