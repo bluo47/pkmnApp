@@ -1,5 +1,6 @@
 ### 10/20/23 (Fri)
 - [CRUD Operations with Blazor](https://www.c-sharpcorner.com/article/crud-operations-using-blazor-net-6-0-entity-framework-core/)
+- [Blazor workshop series](https://github.com/dotnet-presentations/blazor-workshop/blob/main/docs/00-get-started.md)
 
 ### 10/18/23 (Wed)
 - Worked on the communication between API and Blazor, and finding way to put that into UI design from MudBlazor
