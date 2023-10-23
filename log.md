@@ -1,3 +1,7 @@
+### 10/23/23 (Mon)
+- Plan to finish Blazor workshop series unless I get my assignment before then
+- Send out information for the letters of recommendation requests
+
 ### 10/20/23 (Fri)
 - [CRUD Operations with Blazor](https://www.c-sharpcorner.com/article/crud-operations-using-blazor-net-6-0-entity-framework-core/)
 - [Blazor workshop series](https://github.com/dotnet-presentations/blazor-workshop/blob/main/docs/00-get-started.md)
