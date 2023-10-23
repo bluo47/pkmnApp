@@ -2,7 +2,7 @@ _Notes are derived from the information available on Microsoft Learn [here](http
 
 # Using pages, routing, and layouts to improve Blazor navigation
 
-### Using the Blazor router component to control app navigation
+### Using the Blazor router component to control app navigation [#](https://learn.microsoft.com/en-us/training/modules/use-pages-routing-layouts-control-blazor-navigation/2-use-router-component-control-apps-navigation)
 Routing is how we ensure that each request is sent to the appropriate component and that it displays what exactly the client may want.
 
 ```html
@@ -36,3 +36,27 @@ To use `NavigationManager`, you need to do:
 1. At the top of the document, write the line `@inject NavigationManager NavManager`. You can name the `NavigationManager` however you like. This adds a NavigationManager object into your component for convenient use.
 2. Use `QueryHelpers` from `Microsoft.AspNetCore.WebUtilities` to help parse the full URI and access the query string.
 3. `NavigationManager` also provides a method to send the user to another component with `NavigationManager.NavigateTo()`.
+4. To utilize `NavigationManager`, simply pass the name of our NavigationManager instance (`NavManager` in our case) and call a related function (i.e. `BaseUri`) using dot notation.
+
+> The `Match` attribute in the **NavLink** component is used to manage when the link is highlighted.
+There are two options:
+- `NavLinkMatch.All` highlights the link as active only when the href matches the **entire current URL**.
+- `NavLinkMatch.Prefix` highlights the link as active when the href matches the **first part of the current URL**.
+
+In an example where we have the link `<NavLink href="pizzas" Match="NavLinkMatch.Prefix">`, the link would be highlighted as active for the `/pizzas` URL and any subdirectories under `/pizzas`, like `/pizzas/formaggio` for example.
+
+---
+
+### Changing navigation in Blazor app using the @page directive [#](https://learn.microsoft.com/en-us/training/modules/use-pages-routing-layouts-control-blazor-navigation/3-exercise-change-navigation-blazor-using-page-directive)
+
+`<a>` elements are used in HTML to represent and add hyperlinks to your webpages. Blazor offers the `NavLink` element that adds more capability to the navigation aspect of our web app.    
+Using the `@page` directive, we can instruct Blazor to intercept the request and specify which razor files to route to.
+
+---
+
+### Explore how route parameters affect your Blazor app's routing [#](https://learn.microsoft.com/en-us/training/modules/use-pages-routing-layouts-control-blazor-navigation/4-explore-route-parameters-effect-apps-routing)
+
+In addition to determining what pages to route requests to, the `@page` directive is also helpful in specifying parts of the URI that can be passed to the component as route parameters.    
+Null coalescing (??, ??=) operator is designed to assign the right hand value to the left hand if the left hand is null. It is helpful for defining variables that have not yet been initialized or defined as null. For more information, check this article [here](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator).
+- component parameters are values sent fom a parent component to a child component. In the parent, you specify the component parameter value as an attribute of the child component's tag.
+- 
