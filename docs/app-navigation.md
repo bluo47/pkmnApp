@@ -58,5 +58,30 @@ Using the `@page` directive, we can instruct Blazor to intercept the request and
 
 In addition to determining what pages to route requests to, the `@page` directive is also helpful in specifying parts of the URI that can be passed to the component as route parameters.    
 Null coalescing (??, ??=) operator is designed to assign the right hand value to the left hand if the left hand is null. It is helpful for defining variables that have not yet been initialized or defined as null. For more information, check this article [here](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator).
-- component parameters are values sent fom a parent component to a child component. In the parent, you specify the component parameter value as an attribute of the child component's tag.
-- 
+> Component parameters are values sent fom a parent component to a child component. In the parent, you specify the component parameter value as an attribute of the child component's tag.
+
+```razor
+@page "/FavoritePizzas/{favorite}"
+...
+@code {
+	[Parameter]
+	public string Favorite { get; set; }
+	...
+}
+```
+The route parameter in the example above (`favorite`) is required; but this parameter can be made optional, by adding a question mark at the end, like this: `favorite?`. The default value for the parameter can be set in the `OnInitialized` method that runs when the user requests the page for the first time. Null coalescing can be used to define the default value given that the parameter is null, as explained above.
+> One note about the `OnInitialized` method; it only runs when the page itself is requested the first time - so any subsequent requests made, whether it is from different routing parameters or not, `OnInitialized` won't actually run. If you want a function that does run for these behaviors, use `OnParametersSet` instead.
+
+We can additionally set a catch-all route parameter which will catch all paths under the root href given.
+
+---
+
+### Build reusable Blazor components using layouts
+
+Blazor layouts are a specific kind of component that is designed to be able to be used and shared amongst various pages in the document   
+Two requirements that are unique to layout components:
+- You must inherit the `LayoutComponentBase` class
+- You must include the `@Body` directive in the location where you want referencing components' content to be rendered.
+
+To use a layout from another component, add the `@layout` directive with the name of the layout to be applied. Then, the instance of `@Body` will render the layout's internal HTML.
+
