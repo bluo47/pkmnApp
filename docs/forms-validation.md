@@ -6,3 +6,4 @@ _Notes are derived from the information available on Microsoft Learn [here](http
 
 To capture an event with Blazor, you first write a C# method that handles the event, and then bind the event to the method with a Blazor directive.
 > "**DOM Events** allow JavaScript to add **event listener** or **event handlers** to HTML elements" [w3schools](https://www.w3schools.com/jsref/dom_obj_event.asp)
+
