@@ -76,7 +76,7 @@ We can additionally set a catch-all route parameter which will catch all paths u
 
 ---
 
-### Build reusable Blazor components using layouts
+### Build reusable Blazor components using layouts [#](https://learn.microsoft.com/en-us/training/modules/use-pages-routing-layouts-control-blazor-navigation/6-build-reusable-component-using-layouts)
 
 Blazor layouts are a specific kind of component that is designed to be able to be used and shared amongst various pages in the document   
 Two requirements that are unique to layout components:
